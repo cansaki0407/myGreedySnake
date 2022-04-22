@@ -27,6 +27,12 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	Random random = new Random();
 	boolean isFail; //游戏是否失败 true 失败了 false 未失败
 	int score; //设置关卡累计积分
+	int Checkpoints ;//关卡数
+	//设置围墙给第二关使用
+	int wallX1 = 50;
+	int wallX2 = 1050;
+	int wallY1 = 100;
+	int wallY2 = 850;
 
 
 	Timer timer = new Timer(50,this);
@@ -86,6 +92,11 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 			g.setColor(Color.yellow);
 			g.setFont(new Font("宋体",Font.BOLD,60));
 			g.drawString("按空格键开始游戏", 300, 400);
+			//画关卡选择提示栏
+			g.setColor(Color.green);
+			g.setFont(new Font("黑体",Font.BOLD,30));
+			g.drawString("按键1：选择第一关（无围墙）",300 , 450);
+			g.drawString("按键2：选择第二关（有围墙）",300 , 500);
 		}
 
 		//设置游戏结束功能（蛇发生碰撞除食物之外的障碍）
@@ -103,6 +114,8 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 		g.setColor(Color.pink);
 		g.setFont(new Font("黑体",Font.BOLD,30));
 		g.drawString("积分："+score, 800, 50);
+
+
 	}
 
 	@Override
@@ -147,6 +160,13 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 					isFail = !isFail;
 				}
 			}
+
+			//碰到围墙，游戏结束
+			if(Checkpoints == 2){
+				if(snakeX[0] == wallX1 || snakeX[0] == wallX2 || snakeY[0] == wallY1 || snakeY[0] == wallY2){
+					isFail = !isFail;
+				}
+			}
 			repaint();
 		}
 
@@ -164,6 +184,18 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 				isFail = !isFail;
 				init();
 			}
+			isRun = !isRun;
+			repaint();
+		}
+
+		if (keyCode == KeyEvent.VK_1){
+			Checkpoints = 1;
+			isRun = !isRun;
+			repaint();
+		}
+
+		if(keyCode == KeyEvent.VK_2){
+			Checkpoints = 2;
 			isRun = !isRun;
 			repaint();
 		}
