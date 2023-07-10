@@ -29,9 +29,9 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	int score; //设置关卡累计积分
 	int Checkpoints ;//关卡数
 	//设置围墙给第二关使用
-	int wallX1 = 50;
+	int wallX1 = 25;
 	int wallX2 = 1050;
-	int wallY1 = 100;
+	int wallY1 = 75;
 	int wallY2 = 850;
 
 
@@ -40,9 +40,10 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	GamePanel(){
 		init();
 		//获取键盘的监听事件
-		timer.start();
 		this.setFocusable(true);
 		this.addKeyListener(this);
+		timer.start();
+
 	}
 
 	void init(){
@@ -51,7 +52,7 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 		snakeX[2] = 100;snakeY[2] = 125;//蛇身第二节的初始位置
 		length = firstLength;//蛇的初始长度
 		direction = "R";
-		foodX = 25 + 25 * random.nextInt(40);
+		foodX = 50 + 25 * random.nextInt(40);
 		foodY = 100 + 25 * random.nextInt(30);
 		isFail = false;
 	}
@@ -61,7 +62,7 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		this.setBackground(Color.white);
+		this.setBackground(Color.LIGHT_GRAY);
 		g.fillRect(50, 100, 1000, 750);  // 设置矩形游戏区域
 
 		g.setFont(new Font("黑体",Font.BOLD,50));
@@ -128,28 +129,28 @@ public class GamePanel extends JPanel implements ActionListener,KeyListener {
 			}
 			if (direction.equals("R")){
 				snakeX[0] = snakeX[0] + 25;
-				if (snakeX[0] == 1050){
+				if (snakeX[0] == 1050 && Checkpoints == 1){
 					snakeX[0] = 50;
 				}
 			}else if (direction.equals("L")){
 				snakeX[0] = snakeX[0] - 25;
-				if (snakeX[0] == 25){
+				if (snakeX[0] == 25 && Checkpoints == 1){
 					snakeX[0] = 1025;
 				}
 			}else if (direction.equals("U")){
 				snakeY[0] = snakeY[0] - 25;
-				if (snakeY[0] == 75){
+				if (snakeY[0] == 75 && Checkpoints == 1){
 					snakeY[0] = 825;
 				}
 			}else if (direction.equals("D")){
 				snakeY[0] = snakeY[0] + 25;
-				if (snakeY[0] == 850){
+				if (snakeY[0] == 850 && Checkpoints == 1){
 					snakeY[0] = 100;
 				}
 			}
 			//蛇吃到食物(蛇头坐标是否与食物重合)
 			if(snakeX[0] == foodX && snakeY[0] == foodY){
-				foodX = 25 + 25 * random.nextInt(40);
+				foodX = 50 + 25 * random.nextInt(40);
 				foodY = 100 + 25 * random.nextInt(30);
 				length++;
 				score = (length-firstLength)*10;
